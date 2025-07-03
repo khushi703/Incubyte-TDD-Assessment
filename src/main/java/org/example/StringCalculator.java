@@ -4,18 +4,14 @@ import java.util.Objects;
 
 public class StringCalculator {
     public static int add(String input) {
-        if(Objects.equals(input, "")) {
+        if (input == null || input.isEmpty()) { // if input is ""
             return 0;
         }
-        if (input.contains(","))
-        {
-            String[] numbersArray = input.split(",");
-            int sumOfArray = 0;
-            for(String number : numbersArray) {
-                sumOfArray += Integer.parseInt(number);
-            }
-            return sumOfArray;
+        String[] numbersArray = input.split(","); // if input is comma separated and only one element
+        int sumOfArray = 0;
+        for (String number : numbersArray) {
+            sumOfArray += Integer.parseInt(number);
         }
-        return Integer.parseInt(input);
+        return sumOfArray;
     }
 }
