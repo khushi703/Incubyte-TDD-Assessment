@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -19,9 +21,15 @@ public class StringCalculator {
         }
         String[] numbersArray = input.split(DELIMITER);
         int sumOfArray = 0;
+        List<Integer> negativesNums = new ArrayList<>();
         for (String number : numbersArray) {
             if(!number.trim().isEmpty()) {
-                sumOfArray += Integer.parseInt(number.trim());
+                int num = Integer.parseInt(number.trim());
+
+                if(num<0){
+                    negativesNums.add(num);
+                }
+                sumOfArray += num;
             }
         }
         return sumOfArray;
