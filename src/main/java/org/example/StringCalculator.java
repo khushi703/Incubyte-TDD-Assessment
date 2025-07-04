@@ -28,11 +28,12 @@ public class StringCalculator {
                 continue;
             }
                 int num = Integer.parseInt(number.trim());
-
                 if(num<0){
                     negativesNums.add(num);
                 }
-                sumOfArray += num;
+                if(num<=1000) {
+                    sumOfArray += num;
+                }
             }
         if (!negativesNums.isEmpty()) {
             throw new IllegalArgumentException(
