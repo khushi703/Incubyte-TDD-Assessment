@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class StringCalculator {
     public static int add(String input) {
@@ -34,7 +35,12 @@ public class StringCalculator {
                 sumOfArray += num;
             }
         if (!negativesNums.isEmpty()) {
-            throw new IllegalArgumentException("Negatives not allowed: " + negativesNums);
+            throw new IllegalArgumentException(
+                    "Negatives not allowed: [" + negativesNums.stream()
+                            .map(String::valueOf)
+                            .collect(Collectors.joining(",")) + "]"
+            );
+
         }
         return sumOfArray;
     }
