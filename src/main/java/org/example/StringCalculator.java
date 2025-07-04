@@ -7,10 +7,13 @@ public class StringCalculator {
         if (input == null || input.isEmpty()) { // if input is ""
             return 0;
         }
-        String[] numbersArray = input.split(","); // if input is comma separated and only one element
+        // Split on comma or newline
+        String[] numbersArray = input.split("[,\n]");
         int sumOfArray = 0;
         for (String number : numbersArray) {
-            sumOfArray += Integer.parseInt(number);
+            if(!number.isEmpty()) {
+                sumOfArray += Integer.parseInt(number);
+            }
         }
         return sumOfArray;
     }
