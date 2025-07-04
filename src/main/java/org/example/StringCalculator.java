@@ -23,7 +23,9 @@ public class StringCalculator {
         int sumOfArray = 0;
         List<Integer> negativesNums = new ArrayList<>();
         for (String number : numbersArray) {
-            if(!number.trim().isEmpty()) {
+            if(number.trim().isEmpty()) {
+                continue;
+            }
                 int num = Integer.parseInt(number.trim());
 
                 if(num<0){
@@ -31,6 +33,8 @@ public class StringCalculator {
                 }
                 sumOfArray += num;
             }
+        if (!negativesNums.isEmpty()) {
+            throw new IllegalArgumentException("Negatives not allowed: " + negativesNums);
         }
         return sumOfArray;
     }
