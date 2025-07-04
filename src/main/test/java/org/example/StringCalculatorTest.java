@@ -6,10 +6,12 @@ public class StringCalculatorTest {
     @Test
     public static void testEmptyStringReturnsZero() {
         assertEquals(0, StringCalculator.add(""));
+        assertEquals(0, StringCalculator.add(null));
     }
     @Test
     public static void testSingleNumber() {
         assertEquals(7, StringCalculator.add("7"));
+        assertEquals(5, StringCalculator.add("5"));
     }
     @Test
     public static void testCommaSeparatedNumbers() {
@@ -44,10 +46,11 @@ public class StringCalculatorTest {
         assertEquals(6, StringCalculator.add("//[***]\n1***2***3"));
         assertEquals(6, StringCalculator.add("//[***]\n2***2***2"));
         assertEquals(20, StringCalculator.add("//[***]\n6***2***12"));
+        assertEquals(15, StringCalculator.add("//[***][%%%]\n1***2%%%3***4%%%5"));
     }
     @Test
     public void testCanHandleMultipleDelimiter(){
         assertEquals(6, StringCalculator.add("//[*][%]\n1*2%3"));
-        assertEquals(10, StringCalculator.add("//[##][!!][*]\\n1##2!!3*4"));
+        assertEquals(10, StringCalculator.add("//[##][!!][*]\n1##2!!3*4"));
     }
 }
