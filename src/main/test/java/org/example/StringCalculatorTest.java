@@ -15,4 +15,8 @@ public class StringCalculatorTest {
     public static void testCommaSeparatedNumbers() {
         assertEquals(14, StringCalculator.add("7,7"));
     }
+    @Test
+    public void testCanHandleNewlineAsDelimiter() {
+        assertEquals(6, StringCalculator.add("1\n2,3"));
+    }
 }
