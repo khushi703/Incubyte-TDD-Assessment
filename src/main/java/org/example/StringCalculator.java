@@ -16,8 +16,12 @@ public class StringCalculator {
         // Extract custom delimiter if present
         if (input.startsWith("//")) {
             int delimiterEnd = input.indexOf('\n');
-            String delimiter = input.substring(2, delimiterEnd);
-            DELIMITER = Pattern.quote(delimiter);
+            String delimiterSection = input.substring(2, delimiterEnd);
+            if (delimiterSection.startsWith("[") && delimiterSection.endsWith("]")) {
+                DELIMITER = Pattern.quote(delimiterSection.substring(1, delimiterSection.length() - 1));
+            } else {
+                DELIMITER = Pattern.quote(delimiterSection);
+            }
             input = input.substring(delimiterEnd + 1);
         }
         String[] numbersArray = input.split(DELIMITER);
