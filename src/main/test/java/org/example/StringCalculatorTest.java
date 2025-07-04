@@ -42,6 +42,7 @@ public class StringCalculatorTest {
     @Test
     public void testCanHandleMultiCharDelimiter(){
         assertEquals(6, StringCalculator.add("//[***]\n1***2***3"));
-        assertEquals(8, StringCalculator.add("//[***]\n2***2***2"));
+        assertEquals(6, StringCalculator.add("//[***]\n2***2***2"));
+        assertEquals(20, StringCalculator.add("//[***]\n6***2***12"));
     }
 }
