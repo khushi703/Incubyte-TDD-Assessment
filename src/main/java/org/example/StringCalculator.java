@@ -2,51 +2,72 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class StringCalculator {
     public static int add(String input) {
-        if (input == null || input.isEmpty()) { // if input is ""
+        if (input == null || input.isEmpty()) {
             return 0;
         }
+        // Parse delimiter and remaining input
+        DelimiterParseResult parseResult = parseDelimiter(input);
+        final String DELIMITER = parseResult.delimiterRegex;
+        final String numbersSection = parseResult.numbersSection;
+        String[] numbersArray = numbersSection.split(DELIMITER);
+        int sumOfArray = 0;
+        List<Integer> negativesNums = new ArrayList<>();
 
-        String DELIMITER = "[,\n]";
-        // Extract custom delimiter if present
+        for (String number : numbersArray) {
+            if (number.trim().isEmpty()) {
+                continue;
+            }
+            int num = Integer.parseInt(number.trim());
+            if (num < 0) {
+                negativesNums.add(num);
+            }
+            if (num <= 1000) {
+                sumOfArray += num;
+            }
+        }
+        if (!negativesNums.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Negatives not allowed: [" +
+                            negativesNums.stream()
+                                    .map(String::valueOf)
+                                    .collect(Collectors.joining(",")) +
+                            "]"
+            );
+        }
+
+        return sumOfArray;
+    }
+    // Helper class to hold delimiter and numbers section.
+    private static class DelimiterParseResult {
+        final String delimiterRegex;
+        final String numbersSection;
+
+        DelimiterParseResult(String delimiterRegex, String numbersSection) {
+            this.delimiterRegex = delimiterRegex;
+            this.numbersSection = numbersSection;
+        }
+    }
+    // Parses the delimiter from the input string if present, otherwise uses default.
+    private static DelimiterParseResult parseDelimiter(String input) {
+        String delimiterRegex = "[,\n]";
+        String numbersSection = input;
+
         if (input.startsWith("//")) {
             int delimiterEnd = input.indexOf('\n');
             String delimiterSection = input.substring(2, delimiterEnd);
             if (delimiterSection.startsWith("[") && delimiterSection.endsWith("]")) {
-                DELIMITER = Pattern.quote(delimiterSection.substring(1, delimiterSection.length() - 1));
+                delimiterRegex = Pattern.quote(delimiterSection.substring(1, delimiterSection.length() - 1));
             } else {
-                DELIMITER = Pattern.quote(delimiterSection);
+                delimiterRegex = Pattern.quote(delimiterSection);
             }
-            input = input.substring(delimiterEnd + 1);
+            numbersSection = input.substring(delimiterEnd + 1);
         }
-        String[] numbersArray = input.split(DELIMITER);
-        int sumOfArray = 0;
-        List<Integer> negativesNums = new ArrayList<>();
-        for (String number : numbersArray) {
-            if(number.trim().isEmpty()) {
-                continue;
-            }
-                int num = Integer.parseInt(number.trim());
-                if(num<0){
-                    negativesNums.add(num);
-                }
-                if(num<=1000) {
-                    sumOfArray += num;
-                }
-            }
-        if (!negativesNums.isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Negatives not allowed: [" + negativesNums.stream()
-                            .map(String::valueOf)
-                            .collect(Collectors.joining(",")) + "]"
-            );
 
-        }
-        return sumOfArray;
+        return new DelimiterParseResult(delimiterRegex, numbersSection);
     }
 }
