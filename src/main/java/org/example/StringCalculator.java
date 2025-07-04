@@ -10,10 +10,11 @@ public class StringCalculator {
         }
 
         String DELIMITER = "[,\n]";
-        // Check for custom delimiter syntax
+        // Extract custom delimiter if present
         if (input.startsWith("//")) {
             int delimiterEnd = input.indexOf('\n');
-            DELIMITER = Pattern.quote(input.substring(2, delimiterEnd));
+            String delimiter = input.substring(2, delimiterEnd);
+            DELIMITER = Pattern.quote(delimiter);
             input = input.substring(delimiterEnd + 1);
         }
         String[] numbersArray = input.split(DELIMITER);
