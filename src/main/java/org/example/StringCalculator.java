@@ -11,6 +11,7 @@ public class StringCalculator {
         if (input == null || input.isEmpty()) {
             return 0;
         }
+        List<String> invalidChars = new ArrayList<>();
         // Parse delimiter and remaining input
         DelimiterParseResult parseResult = parseDelimiter(input);
         final String DELIMITER = parseResult.delimiterRegex;
@@ -22,14 +23,18 @@ public class StringCalculator {
             if (number.trim().isEmpty()) {
                 continue;
             }
-            int num = Integer.parseInt(number.trim());
-            if (num < 0) {
-                negativesNums.add(num);
-            }
-            if (num <= 1000) {
-                sumOfArray += num;
+            try {
+                int num = Integer.parseInt(number);
+                if (num < 0) negativesNums.add(num);
+                if (num <= 1000) sumOfArray += num;
+            } catch (NumberFormatException ex) {
+                invalidChars.add(number);
             }
         }
+        if (!invalidChars.isEmpty()) {
+            throw new IllegalArgumentException("Charter not allowed: [" + String.join(",", numbersArray) + "]");
+        }
+
         if (!negativesNums.isEmpty()) {
             throw new IllegalArgumentException(
                     "Negatives not allowed: [" +
