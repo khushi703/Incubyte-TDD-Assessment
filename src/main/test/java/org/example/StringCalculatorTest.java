@@ -28,7 +28,7 @@ public class StringCalculatorTest {
     }
     @Test
     public void testCanThrowsExceptionForNegativeNumbers() {
-        try{
+        try {
             StringCalculator.add("-1,2,-8");
         }
         catch (IllegalArgumentException e) {
@@ -49,8 +49,17 @@ public class StringCalculatorTest {
         assertEquals(15, StringCalculator.add("//[***][%%%]\n1***2%%%3***4%%%5"));
     }
     @Test
-    public void testCanHandleMultipleDelimiter(){
+    public void testCanHandleMultipleDelimiter() {
         assertEquals(6, StringCalculator.add("//[*][%]\n1*2%3"));
         assertEquals(10, StringCalculator.add("//[##][!!][*]\n1##2!!3*4"));
+    }
+    @Test
+    public void testCanThrowsExceptionForChar() {
+        try{
+            StringCalculator.add("1,2,e");
+        }
+        catch (IllegalArgumentException e){
+            assertEquals("Charter not allowed: [1,2,e]", e.getMessage());
+        }
     }
 }
